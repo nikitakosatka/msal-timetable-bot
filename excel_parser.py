@@ -26,14 +26,14 @@ def get_weeks(file="Raspisanie.xlsx"):
         for day in week.get_days():
             while True:
                 if str(sheet[f"{column[0]}{string_num}"].value).split()[
-                    0] in week_names and day.get_date() == "":
+                        0] in week_names and day.get_date() == "":
                     day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
                     string_num += 1
                     continue
                 elif len(str(sheet[f"{column[0]}{string_num}"].value).split("-")) == 2:
-                    lesson = Lesson(sheet[f"{column[1]}{string_num}"].value.split()[:-2],
+                    lesson = Lesson(' '.join(sheet[f"{column[1]}{string_num}"].value.split()[:-2]),
                                     sheet[f"{column[0]}{string_num}"].value,
-                                    sheet[f"{column[1]}{string_num}"].value.split()[-2:])
+                                    ' '.join(sheet[f"{column[1]}{string_num}"].value.split()[-2:]))
                     day.add_lesson(lesson)
                     string_num += 1
                 elif day.get_date() != "":

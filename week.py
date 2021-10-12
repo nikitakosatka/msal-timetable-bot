@@ -5,7 +5,7 @@ class Lesson:
         self.classroom = classroom
 
     def __str__(self):
-        return f"Name: {self.name}\nTime:{self.time}\nClassroom:{self.classroom}"
+        return f"Name: {self.name}\nTime:{self.time}\nClassroom:{self.classroom}\n"
 
     def get_name(self):
         return self.name
@@ -23,6 +23,9 @@ class Day:
 
     def __str__(self):
         return '\n'.join(list(map(str, self.lessons)))
+
+    def is_empty(self):
+        return not self.lessons
 
     def get_date(self):
         return self.date
@@ -42,6 +45,9 @@ class Day:
         else:
             self.lessons.insert(num - 1, lesson)
 
+    def set_date(self, date):
+        self.date = date
+
 
 class Week:
     def __init__(self, days=None):
@@ -49,8 +55,8 @@ class Week:
             days = []
         self.days = days
 
-    def __str__(self):
-        return
+    def is_empty(self):
+        return not self.days or all(day.is_empty() for day in self.days)
 
     def get_days(self):
         return self.days

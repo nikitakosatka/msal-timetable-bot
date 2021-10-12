@@ -42,3 +42,12 @@ def get_weeks(file="Raspisanie.xlsx"):
     weeks[1], weeks[2], weeks[3], weeks[4] = weeks[3], weeks[1], weeks[4], weeks[2]
 
     return weeks
+
+
+def get_day_by_date(weeks, date):
+    for week in weeks:
+        for day in week.get_days():
+            if day.get_date() == date:
+                return day
+
+    return "Day not found"

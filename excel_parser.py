@@ -2,15 +2,43 @@ import openpyxl
 
 from week import *
 
-wb = openpyxl.load_workbook(filename='Raspisanie.xlsx')
-sheet = wb['Лист1']
 
-week = Week()
-monday = Day()
-for i in range(3, 5):
-    lesson = Lesson(' '.join(sheet[f"B{i}"].value.split()[:-2]),
-                    sheet[f"A{i}"].value,
-                    ' '.join(sheet[f"B{i}"].value.split()[-2:]))
-    monday.add_lesson(lesson)
+def get_weeks(file="Raspisanie.xlsx"):
+    wb = openpyxl.load_workbook(filename=file)
+    sheet = wb['Лист1']
 
-print(monday)
+    weeks = [Week([Day() for _ in range(6)]) for _ in range(6)]
+
+    week_names = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота"]
+
+    column = "AB"
+
+    string_num = -1
+    for week in weeks:
+        if column == "DE":
+            pass
+        elif not weeks[2].is_empty() and weeks[3].is_empty():
+            string_num = -1
+            column = "DE"
+        else:
+            column = "AB"
+        string_num += 3
+        for day in week.get_days():
+            while True:
+                if str(sheet[f"{column[0]}{string_num}"].value).split()[
+                    0] in week_names and day.get_date() == "":
+                    day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
+                    string_num += 1
+                    continue
+                elif len(str(sheet[f"{column[0]}{string_num}"].value).split("-")) == 2:
+                    lesson = Lesson(sheet[f"{column[1]}{string_num}"].value.split()[:-2],
+                                    sheet[f"{column[0]}{string_num}"].value,
+                                    sheet[f"{column[1]}{string_num}"].value.split()[-2:])
+                    day.add_lesson(lesson)
+                    string_num += 1
+                elif day.get_date() != "":
+                    break
+
+    weeks[1], weeks[2], weeks[3], weeks[4] = weeks[3], weeks[1], weeks[4], weeks[2]
+
+    return weeks

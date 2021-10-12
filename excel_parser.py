@@ -28,7 +28,7 @@ def get_weeks(file="Raspisanie.xlsx"):
         for day in week.get_days():
             while True:
                 if str(sheet[f"{column[0]}{string_num}"].value).split()[
-                    0] in week_names and day.get_date() == "":
+                        0] in week_names and day.get_date() == "":
                     day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
                     string_num += 1
                     continue

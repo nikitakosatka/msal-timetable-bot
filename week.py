@@ -10,6 +10,9 @@ class Lesson:
     def get_name(self):
         return self.name
 
+    def get_classroom(self):
+        return self.classroom
+
     def get_time(self):
         return self.time
 

@@ -14,7 +14,7 @@ weeks = get_weeks()
 @bot.message_handler(content_types=['text'])
 def send_timetable(message):
     today = date.today()
-    day = ""
+    day = message.text
     if message.text.lower() == "сегодня":
         day = date.today().strftime("%d.%m")
     elif message.text.lower() == 'завтра':

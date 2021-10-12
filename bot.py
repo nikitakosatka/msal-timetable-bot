@@ -27,9 +27,17 @@ def send_help(message):
 def send_timetable(message):
     today = date.today()
     day = message.text
-    if message.text.lower() == "сегодня":
-        day = date.today().strftime("%d.%m")
-    elif message.text.lower() == 'завтра':
+    timetable = None
+
+    if day.lower() == "сегодня":
+        day = today.strftime("%d.%m")
+
+    elif day.lower() == 'завтра':
         day = (today + timedelta(days=1)).strftime("%d.%m")
-    timetable = get_day_by_date(weeks, day)
+
+    elif day.lower() in week_names:
+        timetable = get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
+
+    if timetable is None:
+        timetable = get_day_by_date(weeks, day)
     bot.send_message(message.chat.id, get_beautiful_timetable(timetable))

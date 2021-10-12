@@ -21,6 +21,7 @@ class Day:
     def __init__(self, date="", lessons=None):
         if lessons is None:
             lessons = []
+        self.weekday = ""
         self.date = date
         self.lessons = lessons
 
@@ -33,6 +34,9 @@ class Day:
     def get_date(self):
         return self.date
 
+    def get_weekday(self):
+        return self.weekday
+
     def get_lessons(self):
         return self.lessons
 
@@ -41,6 +45,9 @@ class Day:
 
     def set_lessons(self, lessons):
         self.lessons = lessons
+
+    def set_weekday(self, weekday):
+        self.weekday = weekday
 
     def add_lesson(self, lesson, num=None):
         if num is None:

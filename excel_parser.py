@@ -29,6 +29,8 @@ def get_weeks(file="Raspisanie.xlsx"):
             while True:
                 if str(sheet[f"{column[0]}{string_num}"].value).split()[
                         0] in week_names and day.get_date() == "":
+                    day.set_weekday(
+                        str(sheet[f"{column[0]}{string_num}"].value).split()[0].capitalize())
                     day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
                     string_num += 1
                     continue
@@ -59,7 +61,7 @@ def get_beautiful_timetable(day):
     text = ""
     if day == "День не найден":
         return day
-    text += '📅' + day.get_date() + '\n\n'
+    text += '📅 '  + day.get_weekday() + ' ' + day.get_date() + '\n\n'
     for lesson in range(day.get_lessons_count()):
         text += nums[lesson] + ' ' + day.get_lessons()[lesson].name + '\n'
         text += '🚪 ' + day.get_lessons()[lesson].get_classroom() + '\n'

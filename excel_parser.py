@@ -2,6 +2,8 @@ import openpyxl
 
 from week import *
 
+nums = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"]
+
 
 def get_weeks(file="Raspisanie.xlsx"):
     wb = openpyxl.load_workbook(filename=file)
@@ -26,7 +28,7 @@ def get_weeks(file="Raspisanie.xlsx"):
         for day in week.get_days():
             while True:
                 if str(sheet[f"{column[0]}{string_num}"].value).split()[
-                        0] in week_names and day.get_date() == "":
+                    0] in week_names and day.get_date() == "":
                     day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
                     string_num += 1
                     continue
@@ -51,3 +53,14 @@ def get_day_by_date(weeks, date):
                 return day
 
     return "Day not found"
+
+
+def get_beautiful_timetable(day):
+    text = ""
+    text += '📅' + day.get_date() + '\n\n'
+    for lesson in range(day.get_lessons_count()):
+        text += nums[lesson] + ' ' + day.get_lessons()[lesson].name + '\n'
+        text += '🚪 ' + day.get_lessons()[lesson].get_classroom() + '\n'
+        text += '🕒 ' + day.get_lessons()[lesson].get_time() + '\n\n'
+
+    return text

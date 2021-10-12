@@ -5,7 +5,7 @@ class Lesson:
         self.classroom = classroom
 
     def __str__(self):
-        return f"Name: {self.name}\nTime:{self.time}\nClassroom:{self.classroom}\n"
+        return f"Name:{self.name}\nTime:{self.time}\nClassroom:{self.classroom}\n"
 
     def get_name(self):
         return self.name
@@ -22,7 +22,7 @@ class Day:
         self.lessons = lessons
 
     def __str__(self):
-        return '\n'.join(list(map(str, self.lessons)))
+        return '\n'.join([self.date] + list(map(str, self.lessons)))
 
     def is_empty(self):
         return not self.lessons

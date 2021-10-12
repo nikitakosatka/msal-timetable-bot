@@ -52,12 +52,12 @@ def get_day_by_date(weeks, date):
             if day.get_date() == date:
                 return day
 
-    return "Day not found"
+    return "День не найден"
 
 
 def get_beautiful_timetable(day):
     text = ""
-    if day == "Day not found":
+    if day == "День не найден":
         return day
     text += '📅' + day.get_date() + '\n\n'
     for lesson in range(day.get_lessons_count()):

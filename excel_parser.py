@@ -57,6 +57,8 @@ def get_day_by_date(weeks, date):
 
 def get_beautiful_timetable(day):
     text = ""
+    if day == "Day not found":
+        return day
     text += '📅' + day.get_date() + '\n\n'
     for lesson in range(day.get_lessons_count()):
         text += nums[lesson] + ' ' + day.get_lessons()[lesson].name + '\n'

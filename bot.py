@@ -76,6 +76,10 @@ def get_week_timetable():
 def get_keyboard():
     keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
     weekdays_keys = [telebot.types.KeyboardButton(text=day.capitalize()) for day in week_names]
+    today = telebot.types.KeyboardButton(text="Сегодня")
+    tomorrow = telebot.types.KeyboardButton(text="Завтра")
+
+    keyboard.add(today, tomorrow)
 
     for key in range(0, len(weekdays_keys), 3):
         keyboard.add(weekdays_keys[key], weekdays_keys[key + 1], weekdays_keys[key + 2])

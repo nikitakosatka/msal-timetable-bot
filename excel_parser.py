@@ -30,18 +30,29 @@ def get_weeks(file="Raspisanie.xlsx"):
                 # Первая строка дня недели
                 if str(sheet[f"{column[0]}{string_num}"].value).split()[
                         0] in week_names and day.get_date() == "":
-                    day.set_weekday(
-                        str(sheet[f"{column[0]}{string_num}"].value).split()[0].capitalize())
-                    day.set_date(sheet[f"{column[0]}{string_num}"].value.split()[1])
+                    weekday = sheet[f"{column[0]}{string_num}"].value.split()[0].capitalize()
+                    date = sheet[f"{column[0]}{string_num}"].value.split()[1]
+
+                    day.set_weekday(weekday)
+                    day.set_date(date)
                     string_num += 1
                     continue
                 # Если текущаяя строка является временем занятия
                 elif len(str(sheet[f"{column[0]}{string_num}"].value).split("-")) == 2:
-                    lesson = Lesson(' '.join(sheet[f"{column[1]}{string_num}"].value.split()[:-2]),
-                                    sheet[f"{column[0]}{string_num}"].value,
-                                    ' '.join(sheet[f"{column[1]}{string_num}"].value.split()[-2:]))
+                    time = sheet[f"{column[0]}{string_num}"].value
+                    name = sheet[f"{column[1]}{string_num}"].value
+
+                    separator = max(name.lower().find("зал"),
+                                    name.lower().find("ауд"))
+                    if separator == -1:
+                        separator = name.lower().strip().rfind(" ") + 1
+                    lesson = Lesson(name[:separator],
+                                    time,
+                                    name[separator:])
+
                     day.add_lesson(lesson)
                     string_num += 1
+
                 elif day.get_date() != "":
                     break
 

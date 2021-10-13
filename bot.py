@@ -48,7 +48,7 @@ def get_day_timetable(text):
 
         case day if day.lower() in week_names:
             try:
-                return get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
+                return get_beautiful_timetable(get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower()))
 
             except Exception:
                 return day

@@ -25,9 +25,18 @@ def send_help(message):
 
 @bot.message_handler(content_types=['text'])
 def send_timetable(message):
+    text = message.text
+    if text.lower() == "неделя":
+        timetable = get_week_timetable()
+    else:
+        timetable = get_day_timetable(text)
+
+    bot.send_message(message.chat.id, timetable)
+
+
+def get_day_timetable(text):
     today = date.today()
-    day = message.text
-    timetable = None
+    day = text
 
     match day.lower():
         case "сегодня":
@@ -37,8 +46,23 @@ def send_timetable(message):
             day = (today + timedelta(days=1)).strftime("%d.%m")
 
         case day if day.lower() in week_names:
-            timetable = get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
+            try:
+                return get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
 
-    if timetable is None:
-        timetable = get_day_by_date(weeks, day)
-    bot.send_message(message.chat.id, get_beautiful_timetable(timetable))
+            except Exception:
+                return day
+
+    return get_beautiful_timetable(get_day_by_date(weeks, day))
+
+
+def get_week_timetable():
+    today = date.today().strftime("%d.%m")
+    week = get_week_by_day(weeks, today)
+    text = str(week)
+
+    try:
+        text = '\n\n'.join([get_beautiful_timetable(day) for day in week.get_days()])
+    except Exception:
+        pass
+
+    return text

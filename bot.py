@@ -29,14 +29,15 @@ def send_timetable(message):
     day = message.text
     timetable = None
 
-    if day.lower() == "сегодня":
-        day = today.strftime("%d.%m")
+    match day.lower():
+        case "сегодня":
+            day = today.strftime("%d.%m")
 
-    elif day.lower() == 'завтра':
-        day = (today + timedelta(days=1)).strftime("%d.%m")
+        case "завтра":
+            day = (today + timedelta(days=1)).strftime("%d.%m")
 
-    elif day.lower() in week_names:
-        timetable = get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
+        case day if day.lower() in week_names:
+            timetable = get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower())
 
     if timetable is None:
         timetable = get_day_by_date(weeks, day)

@@ -13,6 +13,8 @@ weeks = get_weeks()
 
 @bot.message_handler(commands=["start", "help"])
 def send_help(message):
+    keyboard = get_keyboard()
+
     text = "Привет! Это бот с расписанием МГЮА\n" \
            "Команды:\n" \
            "\"Сегодня\" - расписание на сегодняшний день\n" \
@@ -21,7 +23,8 @@ def send_help(message):
            "\"MM.DD\" - раписание на указанную дату, например \"12.10\"\n" \
            "\"День недели\" - расписание на указанный день недели (в текущей неделе), например " \
            "\"Вторник\"\n"
-    bot.send_message(message.chat.id, text)
+
+    bot.send_message(message.chat.id, text, reply_markup=keyboard)
 
 
 @bot.message_handler(content_types=['text'])
@@ -48,7 +51,8 @@ def get_day_timetable(text):
 
         case day if day.lower() in week_names:
             try:
-                return get_beautiful_timetable(get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower()))
+                return get_beautiful_timetable(
+                    get_day_by_weekday(weeks, today.strftime("%d.%m"), day.lower()))
 
             except Exception:
                 return day
@@ -67,3 +71,16 @@ def get_week_timetable():
         pass
 
     return text
+
+
+def get_keyboard():
+    keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True)
+    weekdays_keys = [telebot.types.KeyboardButton(text=day.capitalize()) for day in week_names]
+
+    for key in range(0, len(weekdays_keys), 3):
+        keyboard.add(weekdays_keys[key], weekdays_keys[key + 1], weekdays_keys[key + 2])
+
+    week_key = telebot.types.KeyboardButton(text="Неделя")
+    keyboard.add(week_key)
+
+    return keyboard

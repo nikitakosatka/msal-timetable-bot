@@ -62,7 +62,7 @@ def get_weeks(file="Raspisanie.xlsx"):
     return weeks
 
 
-def get_day_by_date(weeks, date):
+def get_day_by_date(weeks: list, date: str):
     for week in weeks:
         for day in week.get_days():
             if day.get_date() == date:
@@ -71,7 +71,7 @@ def get_day_by_date(weeks, date):
     return "День не найден"
 
 
-def get_week_by_day(weeks, date):
+def get_week_by_day(weeks: list, date: str):
     for week in weeks:
         for day in week.get_days():
             if day.get_date() == date:
@@ -80,7 +80,7 @@ def get_week_by_day(weeks, date):
     return "Неделя не найдена"
 
 
-def get_day_by_weekday(weeks, date, weekday):
+def get_day_by_weekday(weeks: list, date: str, weekday: str):
     week = get_week_by_day(weeks, date)
     if week == "Неделя не найдена":
         return week
@@ -89,7 +89,7 @@ def get_day_by_weekday(weeks, date, weekday):
             return day
 
 
-def get_beautiful_timetable(day):
+def get_beautiful_timetable(day: Day | str):
     text = ""
     if day == "День не найден":
         return day

@@ -4,4 +4,4 @@
 
 ## Бот с раписанием для МГЮА
 
-![example](https://github.com/nikitakosatka/msal-timetable-bot/blob/main/demo/demo.jpg?raw=true)
+<img src="https://github.com/nikitakosatka/msal-timetable-bot/blob/main/demo/demo.jpg?raw=true" alt="Example" width="300"/>
